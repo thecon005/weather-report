@@ -37,6 +37,13 @@ a {
   height: 60px;
   margin-bottom: 5px;
 }
+#weather-icon {
+  filter: brightness(100);
+  width: 40px;
+  height: 40px;
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
 #nowButton {
   align-items: center;
 }
