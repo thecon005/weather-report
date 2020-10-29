@@ -1,47 +1,56 @@
-function formatDate(timestamp){
- let current = new Date(timestamp);
- let date = current.getDate();
- let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-let day = days[current.getDay()];
-let months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-let month = months[current.getMonth()];
-let year = current.getFullYear();
-let hours = current.getHours();
-let realTime = hours >= 12 ? "pm" : "am";
-hours = hours % 12 || 12;
-let minutes = current.getMinutes();
-if (minutes < 10) {minutes = `0${minutes}`;
-}
-  return `${day} ${month} ${date}, ${year}</br>
-  ${hours}:${minutes}${realTime}`;
+let current = new Date();
+function dateInfo() {
+  let date = current.getDate();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let day = days[current.getDay()];
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  let month = months[current.getMonth()];
+  let year = current.getFullYear();
 
+  return `${day}, ${month} ${date}, ${year}`;
+}
+let dateToday = document.querySelector("h2");
+dateToday.innerHTML = dateInfo(current);
+
+function tellTime() {
+  let hours = current.getHours();
+  let realTime = hours >= 12 ? "pm" : "am";
+  hours = hours % 12 || 12;
+  let minutes = current.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${hours}:${minutes} ${realTime}`;
+}
+let currentTime = document.querySelector("h3");
+currentTime.innerHTML = tellTime(current);
 
 searchCity("Vancouver");
 function showWeather(response) {
   console.log(response);
   let headline = document.querySelector("h1");
-  let dateElement = document.querySelector("#date");
   let temperature = Math.round(response.data.main.temp);
   celsiusTemperature = response.data.main.temp;
   let tempNow = document.querySelector("#temperature");
@@ -51,7 +60,6 @@ function showWeather(response) {
   let iconElement = document.querySelector("#icon");
   let icon = response.data.weather[0].icon;
   headline.innerHTML = `${response.data.name}`;
-  dateElement.innerHTML = formatDate(response.data.dt * 1000);
   tempNow.innerHTML = `${temperature}°C`;
   humidityElement.innerHTML = response.data.main.humidity;
   windElement.innerHTML = response.data.wind.speed;
