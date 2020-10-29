@@ -47,35 +47,23 @@ function tellTime() {
 let currentTime = document.querySelector("h3");
 currentTime.innerHTML = tellTime(current);
 
-function changeTemp(event) {
-  event.preventDefault();
-  let firstTemp = document.querySelector(".temperature");
-  firstTemp.innerHTML = `18°C`;
-}
-let celsius = document.querySelector("#celsius");
-celsius.addEventListener("click", changeTemp);
-
-function changeTempBack(event) {
-  event.preventDefault();
-  let secondTemp = document.querySelector(".temperature");
-  secondTemp.innerHTML = `63°F`;
-}
-let fahrenheit = document.querySelector("#fahrenheit");
-fahrenheit.addEventListener("click", changeTempBack);
-
+searchCity("Vancouver");
 function showWeather(response) {
   console.log(response);
-  let city = response.data.name;
   let headline = document.querySelector("h1");
   let temperature = Math.round(response.data.main.temp);
-  let tempNow = document.querySelector(".temperature");
-  let description = response.data.weather[0].description;
+  celsiusTemperature = response.data.main.temp;
+  let tempNow = document.querySelector("#temperature");
+  let humidityElement = document.querySelector("#humidity");
+  let windElement = document.querySelector("#wind");
   let tempDescription = document.querySelector(".advice");
   let iconElement = document.querySelector("#icon");
   let icon = response.data.weather[0].icon;
-  headline.innerHTML = `${city}`;
+  headline.innerHTML = `${response.data.name}`;
   tempNow.innerHTML = `${temperature}°C`;
-  tempDescription.innerHTML = `${description}`;
+  humidityElement.innerHTML = response.data.main.humidity;
+  windElement.innerHTML = response.data.wind.speed;
+  tempDescription.innerHTML = `${response.data.weather[0].description}`;
   iconElement.setAttribute(
     "src",
     `http://openweathermap.org/img/wn/${icon}@2x.png`
@@ -109,13 +97,34 @@ function getCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
 
-let form = document.querySelector("#search-form");
-form.addEventListener("submit", handleSubmit);
-
 let nowButton = document.querySelector("#now-Button");
 nowButton.addEventListener("click", getCurrentLocation);
 
+function showFahrenheitTemp(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature) + `°F`;
+}
+
+function showCelsiusTemp(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature) + `°C`;
+}
+
+let celsiusTemperature = null;
+
 let goButton = document.querySelector("#go-Button");
 goButton.addEventListener("click", handleSubmit);
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+let fahrenheitLink = document.querySelector("#fahrenheit");
+fahrenheitLink.addEventListener("click", showFahrenheitTemp);
+
+let celsiusLink = document.querySelector("#celsius");
+celsiusLink.addEventListener("click", showCelsiusTemp);
 
 searchCity("Vancouver");
