@@ -49,7 +49,6 @@ currentTime.innerHTML = tellTime(current);
 
 searchCity("Vancouver");
 function showWeather(response) {
-  console.log(response);
   let headline = document.querySelector("h1");
   let temperature = Math.round(response.data.main.temp);
   celsiusTemperature = response.data.main.temp;
