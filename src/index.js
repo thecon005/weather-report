@@ -28,7 +28,7 @@ function dateInfo() {
   let month = months[current.getMonth()];
   let year = current.getFullYear();
 
-  return `${day}, ${month} ${date}, ${year}`;
+  return `${day} ${month} ${date}, ${year}`;
 }
 let dateToday = document.querySelector("h2");
 dateToday.innerHTML = dateInfo(current);
