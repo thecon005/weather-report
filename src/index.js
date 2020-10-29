@@ -62,7 +62,7 @@ function showWeather(response) {
   headline.innerHTML = `${response.data.name}`;
   tempNow.innerHTML = `${temperature}°C`;
   humidityElement.innerHTML = response.data.main.humidity;
-  windElement.innerHTML = response.data.wind.speed;
+  windElement.innerHTML = Math.round(response.data.wind.speed);
   tempDescription.innerHTML = `${response.data.weather[0].description}`;
   iconElement.setAttribute(
     "src",
